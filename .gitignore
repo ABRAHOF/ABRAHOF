@@ -41,3 +41,8 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Arquivos de IA
+CLAUDE.md
+CHATGPT.md
+GEMINI.md
