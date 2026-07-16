@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaPatrocinadores } from '@/funcionalidades/patrocinadores/telas/tela-patrocinadores';
 
-export default function TelaPatrocinadores() {
-  return <Tela titulo="Patrocinadores" subtitulo="Conteúdo em construção." />;
-}
+export default TelaPatrocinadores;
