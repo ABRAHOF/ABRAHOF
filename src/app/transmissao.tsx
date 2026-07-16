@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaTransmissao } from '@/funcionalidades/transmissao/telas/tela-transmissao';
 
-export default function TelaTransmissao() {
-  return <Tela titulo="Transmissão" subtitulo="Conteúdo em construção." />;
-}
+export default TelaTransmissao;
