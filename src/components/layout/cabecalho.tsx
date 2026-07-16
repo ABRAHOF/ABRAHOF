@@ -19,11 +19,15 @@ type CabecalhoProps = {
   /**
    * Logo exibido acima do título.
    *
-   * Recebe a fonte da imagem em vez de embutir um arquivo: o logo da ABRAHOF
-   * ainda não existe neste projeto — `assets/images/icon.png` é o ícone padrão
-   * do template Expo. Ver docs/BACKLOG.md, Sprint 1.
+   * Recebe a fonte da imagem em vez de embutir um arquivo. O logo da ABRAHOF
+   * ainda não está no projeto: o arquivo do web é azul-marinho sobre fundo
+   * transparente e rende contraste de 1,8:1 sobre o fundo escuro do aplicativo
+   * — abaixo do mínimo de 3:1. Enquanto não houver uma versão para fundo
+   * escuro, use `marca`. Ver docs/BACKLOG.md, Sprint 1.
    */
   logo?: ImageSourcePropType;
+  /** Marca textual, no lugar do logo. Ocupa o mesmo espaço. */
+  marca?: string;
   /** Botão de voltar. Padrão: exibido quando há tela anterior na pilha. */
   voltar?: boolean;
   /** Elemento à direita: ação da tela. */
@@ -41,11 +45,12 @@ type CabecalhoProps = {
  * dois existiam sem ação em todas as telas. O sino volta quando houver
  * contagem real por trás. Ver docs/REQUISITOS.md §12.1.
  */
-export function Cabecalho({ titulo, subtitulo, logo, voltar, acaoDireita }: CabecalhoProps) {
+export function Cabecalho({ titulo, subtitulo, logo, marca, voltar, acaoDireita }: CabecalhoProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const exibirVoltar = voltar ?? router.canGoBack();
-  const temLinhaSuperior = exibirVoltar || Boolean(logo) || Boolean(acaoDireita);
+  const temLinhaSuperior =
+    exibirVoltar || Boolean(logo) || Boolean(marca) || Boolean(acaoDireita);
 
   return (
     <View style={[estilos.container, { paddingTop: insets.top + Espacamentos.sm }]}>
@@ -71,6 +76,10 @@ export function Cabecalho({ titulo, subtitulo, logo, voltar, acaoDireita }: Cabe
                 resizeMode="contain"
                 accessibilityLabel="ABRAHOF"
               />
+            ) : marca ? (
+              <Text style={estilos.marca} accessibilityRole="header">
+                {marca}
+              </Text>
             ) : null}
           </View>
 
@@ -127,8 +136,14 @@ const estilos = StyleSheet.create({
     opacity: OPACIDADE_PRESSIONADO,
   },
   logo: {
-    height: 36,
-    width: 120,
+    height: 32,
+    // Proporção do arquivo original (1176×308), para não deformar a marca.
+    aspectRatio: 1176 / 308,
+  },
+  marca: {
+    ...Tipografia.titulo,
+    color: Cores.primaria,
+    letterSpacing: 1,
   },
   textos: {
     gap: Espacamentos.xs,

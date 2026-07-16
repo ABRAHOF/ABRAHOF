@@ -8,6 +8,10 @@ import { Cores, Espacamentos } from '@/theme';
 type TelaProps = {
   titulo?: string;
   subtitulo?: string;
+  /** Marca exibida no cabeçalho, no lugar do título. */
+  marca?: string;
+  /** Botão de voltar do cabeçalho. Padrão: exibido quando há tela anterior. */
+  voltar?: boolean;
   /** Conteúdo à direita do cabeçalho. */
   acaoDireita?: ReactNode;
   /** Oculta o cabeçalho quando a tela tiver um topo próprio. */
@@ -32,6 +36,8 @@ type TelaProps = {
 export function Tela({
   titulo,
   subtitulo,
+  marca,
+  voltar,
   acaoDireita,
   semCabecalho,
   rolavel = true,
@@ -51,7 +57,13 @@ export function Tela({
   return (
     <View style={estilos.container}>
       {semCabecalho ? null : (
-        <Cabecalho titulo={titulo} subtitulo={subtitulo} acaoDireita={acaoDireita} />
+        <Cabecalho
+          titulo={titulo}
+          subtitulo={subtitulo}
+          marca={marca}
+          voltar={voltar}
+          acaoDireita={acaoDireita}
+        />
       )}
 
       {rolavel ? (
