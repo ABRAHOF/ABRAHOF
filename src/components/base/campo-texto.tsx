@@ -45,6 +45,7 @@ export function CampoTexto({
   icone,
   desabilitado,
   secureTextEntry,
+  multiline,
   style,
   ...resto
 }: CampoTextoProps) {
@@ -58,7 +59,12 @@ export function CampoTexto({
         {rotulo}
       </Text>
 
-      <View style={[estilos.campo, Boolean(erro) && estilos.campoComErro]}>
+      <View
+        style={[
+          estilos.campo,
+          Boolean(multiline) && estilos.campoMultilinha,
+          Boolean(erro) && estilos.campoComErro,
+        ]}>
         {icone ? (
           <Ionicons name={icone} size={20} color={Cores.textoSuave} style={estilos.icone} />
         ) : null}
@@ -68,9 +74,13 @@ export function CampoTexto({
           accessibilityLabel={rotulo}
           accessibilityState={{ disabled: Boolean(desabilitado) }}
           editable={!desabilitado}
+          multiline={multiline}
           placeholderTextColor={Cores.textoSuave}
           secureTextEntry={oculto}
-          style={[estilos.entrada, style]}
+          // Sem isto, o Android centraliza o texto verticalmente no campo
+          // multilinha em vez de começar no topo.
+          textAlignVertical={multiline ? 'top' : undefined}
+          style={[estilos.entrada, Boolean(multiline) && estilos.entradaMultilinha, style]}
           {...resto}
         />
 
@@ -120,6 +130,11 @@ const estilos = StyleSheet.create({
     borderRadius: Raios.lg,
     backgroundColor: Cores.superficie,
   },
+  campoMultilinha: {
+    // O texto começa no topo, e não centralizado como num campo de uma linha.
+    alignItems: 'flex-start',
+    paddingVertical: Espacamentos.md,
+  },
   campoComErro: {
     borderColor: Cores.erro,
   },
@@ -132,6 +147,12 @@ const estilos = StyleSheet.create({
     color: Cores.texto,
     // Remove o padding vertical que o Android aplica por padrão.
     paddingVertical: Espacamentos.md,
+  },
+  entradaMultilinha: {
+    // Altura mínima em torno de quatro linhas, como o campo de mensagem do
+    // projeto de referência. Cresce com o conteúdo em vez de travar numa altura.
+    minHeight: 96,
+    paddingVertical: 0,
   },
   acao: {
     marginRight: -Espacamentos.xs,
