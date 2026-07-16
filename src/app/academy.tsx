@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaAcademy } from '@/funcionalidades/academy/telas/tela-academy';
 
-export default function TelaAcademy() {
-  return <Tela titulo="Academy" subtitulo="Conteúdo em construção." />;
-}
+export default TelaAcademy;
