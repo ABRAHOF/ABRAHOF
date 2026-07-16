@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaDocumentos } from '@/funcionalidades/documentos/telas/tela-documentos';
 
-export default function TelaDocumentos() {
-  return <Tela titulo="Documentos" subtitulo="Conteúdo em construção." />;
-}
+export default TelaDocumentos;
