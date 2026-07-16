@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaContato } from '@/funcionalidades/contato/telas/tela-contato';
 
-export default function TelaContato() {
-  return <Tela titulo="Contato" subtitulo="Conteúdo em construção." />;
-}
+export default TelaContato;
