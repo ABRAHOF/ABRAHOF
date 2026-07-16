@@ -2,10 +2,10 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
-import { Botao } from '@/components/botao';
-import { CampoTexto } from '@/components/campo-texto';
-import { TelaBase } from '@/components/tela-base';
-import { Espacamentos } from '@/constants/tema';
+import { BotaoPrimario } from '@/components/base/botao-primario';
+import { CampoTexto } from '@/components/base/campo-texto';
+import { Tela } from '@/components/layout/tela';
+import { Espacamentos } from '@/theme';
 
 export default function TelaLogin() {
   const router = useRouter();
@@ -21,15 +21,16 @@ export default function TelaLogin() {
     <KeyboardAvoidingView
       style={estilos.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <TelaBase
+      <Tela
         titulo="Entrar"
-        descricao="Tela visual. A autenticação será implementada em uma etapa posterior.">
+        subtitulo="Tela visual. A autenticação será implementada em uma etapa posterior.">
         <View style={estilos.formulario}>
           <CampoTexto
             rotulo="E-mail"
             value={email}
             onChangeText={setEmail}
             placeholder="voce@exemplo.com"
+            icone="mail-outline"
             keyboardType="email-address"
             autoCapitalize="none"
             autoComplete="email"
@@ -39,11 +40,13 @@ export default function TelaLogin() {
             value={senha}
             onChangeText={setSenha}
             placeholder="••••••••"
+            icone="lock-closed-outline"
+            autoComplete="current-password"
             secureTextEntry
           />
-          <Botao titulo="Entrar" onPress={entrar} />
+          <BotaoPrimario titulo="Entrar" onPress={entrar} larguraTotal />
         </View>
-      </TelaBase>
+      </Tela>
     </KeyboardAvoidingView>
   );
 }
@@ -53,6 +56,6 @@ const estilos = StyleSheet.create({
     flex: 1,
   },
   formulario: {
-    gap: Espacamentos.medio,
+    gap: Espacamentos.lg,
   },
 });
