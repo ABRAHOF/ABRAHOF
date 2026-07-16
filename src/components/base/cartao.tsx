@@ -36,6 +36,8 @@ type CartaoProps = {
   fim?: ReactNode;
   /** Linha de metadados acima do título: data, categoria, duração. */
   meta?: ReactNode;
+  /** Limite de linhas da descrição. Aumente quando o texto não puder ser cortado. */
+  linhasDescricao?: number;
   onPress?: () => void;
   desabilitado?: boolean;
   estilo?: StyleProp<ViewStyle>;
@@ -59,6 +61,7 @@ export function Cartao({
   imagem,
   fim,
   meta,
+  linhasDescricao = 2,
   onPress,
   desabilitado,
   estilo,
@@ -81,7 +84,7 @@ export function Cartao({
           {titulo}
         </Text>
         {descricao ? (
-          <Text style={estilos.descricao} numberOfLines={2}>
+          <Text style={estilos.descricao} numberOfLines={linhasDescricao}>
             {descricao}
           </Text>
         ) : null}
