@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaBeneficios } from '@/funcionalidades/beneficios/telas/tela-beneficios';
 
-export default function TelaBeneficios() {
-  return <Tela titulo="Benefícios" subtitulo="Conteúdo em construção." />;
-}
+export default TelaBeneficios;
