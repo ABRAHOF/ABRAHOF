@@ -67,6 +67,18 @@ export function formatarDiaMes(dataIso: string): DiaMes {
   return { dia, mes: MESES_ABREVIADOS[indice] };
 }
 
+/** Data curta, no formato brasileiro: "20/01/2026". */
+export function formatarDataCurta(dataIso: string): string {
+  const [ano, mes, dia] = dataIso.slice(0, 10).split('-');
+  const indice = Number(mes) - 1;
+
+  if (!ano || !dia || Number.isNaN(indice) || !MESES_ABREVIADOS[indice]) {
+    return VAZIO;
+  }
+
+  return `${dia}/${mes}/${ano}`;
+}
+
 /** Data por extenso, para leitores de tela: "20 de janeiro de 2026". */
 export function formatarDataPorExtenso(dataIso: string): string {
   const [ano, mes, dia] = dataIso.slice(0, 10).split('-');
