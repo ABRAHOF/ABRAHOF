@@ -1,4 +1,4 @@
-import { FlatList, Linking, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Alert, FlatList, Linking, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { CartaoConteudoAcademy } from '../componentes/cartao-conteudo-academy';
 import { useConteudosAcademy } from '../hooks/use-conteudos-academy';
@@ -7,7 +7,7 @@ import { BotaoSecundario } from '@/components/base/botao-secundario';
 import { TituloSecao } from '@/components/base/titulo-secao';
 import { EstadoVazio } from '@/components/feedback/estado-vazio';
 import { Tela } from '@/components/layout/tela';
-import { CANAL_YOUTUBE } from '@/mocks/academy';
+import { CANAL_YOUTUBE } from '@/constants/links';
 import { Espacamentos } from '@/theme';
 
 /** Padding horizontal aplicado pela `Tela`, dos dois lados. */
@@ -31,6 +31,26 @@ export function TelaAcademy() {
 
   const larguraDisponivel = width - PADDING_TELA - ESPACO_ENTRE_CARTOES * (COLUNAS - 1);
   const larguraCartao = Math.floor(larguraDisponivel / COLUNAS);
+
+  /**
+   * Abre o canal público da associação.
+   *
+   * Mesmo tratamento das telas de Benefícios e Transmissão: sem `canOpenURL` e
+   * sem `catch`, uma falha de abertura vira rejeição não tratada e o toque
+   * simplesmente não faz nada. O `Alert` informa um erro real, não simula
+   * funcionalidade.
+   */
+  async function abrirCanal() {
+    try {
+      const suportado = await Linking.canOpenURL(CANAL_YOUTUBE);
+      if (!suportado) {
+        throw new Error('URL não suportada');
+      }
+      await Linking.openURL(CANAL_YOUTUBE);
+    } catch {
+      Alert.alert('Não foi possível abrir o link', 'Acesse o canal ABRAHOF pelo YouTube.');
+    }
+  }
 
   function renderizarItem({ item }: { item: ConteudoAcademy }) {
     return <CartaoConteudoAcademy conteudo={item} largura={larguraCartao} />;
@@ -66,7 +86,7 @@ export function TelaAcademy() {
             <BotaoSecundario
               titulo="Acessar canal no YouTube"
               icone="logo-youtube"
-              onPress={() => Linking.openURL(CANAL_YOUTUBE)}
+              onPress={abrirCanal}
               larguraTotal
             />
           </View>

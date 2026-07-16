@@ -187,7 +187,7 @@ crash reporting.
 
 ## 7. Funcionalidades que utilizam Supabase
 
-O banco define **12 tabelas**, mas o código consome apenas **3**.
+O banco define **13 tabelas**, mas o código consome apenas **3**.
 
 ### Efetivamente consumidas
 
@@ -208,7 +208,7 @@ e Contato têm tabela pronta no banco, mas a tela usa dados fixos no código.**
 
 ### Segurança (RLS)
 
-Todas as 12 tabelas têm Row Level Security habilitado. Onze delas expõem
+Todas as 13 tabelas têm Row Level Security habilitado. Doze delas expõem
 `SELECT USING (true)` — leitura pública, sem autenticação. A tabela `contatos`
 permite `INSERT WITH CHECK (true)` e **não possui política de SELECT**, portanto
 mensagens podem ser enviadas por qualquer um mas não lidas pelo app.

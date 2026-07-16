@@ -1,15 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import {
-  Cores,
-  Espacamentos,
-  OPACIDADE_DESABILITADO,
-  OPACIDADE_PRESSIONADO,
-  Raios,
-  Sombras,
-  Tipografia,
-} from '@/theme';
+import { Cores, Espacamentos, OPACIDADE_DESABILITADO, Raios, Sombras, Tipografia } from '@/theme';
 
 type CartaoMenuProps = {
   titulo: string;
@@ -73,8 +65,11 @@ const estilos = StyleSheet.create({
     ...Sombras.cartao,
   },
   pressionado: {
-    opacity: OPACIDADE_PRESSIONADO,
-    // O toque também reduz a escala levemente, para não depender só da opacidade.
+    // Fundo azul claro em vez de opacidade: sobre um tema claro, esmaecer um
+    // cartão quase branco não produz retorno visível ao toque.
+    backgroundColor: Cores.pressionado,
+    borderColor: Cores.primaria,
+    // A escala acompanha, para não depender só da cor.
     transform: [{ scale: 0.97 }],
   },
   desabilitado: {

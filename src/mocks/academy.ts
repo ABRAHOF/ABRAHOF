@@ -57,6 +57,3 @@ export const CONTEUDOS_ACADEMY: ConteudoAcademy[] = [
     disponivel: false,
   },
 ];
-
-/** Canal público da associação, exibido ao final da tela. */
-export const CANAL_YOUTUBE = 'https://www.youtube.com/@abrahof_oficial';

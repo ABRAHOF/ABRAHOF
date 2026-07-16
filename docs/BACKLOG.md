@@ -72,8 +72,49 @@ executáveis com o que já existe.
 - [x] `REQUISITOS.md`
 - [x] `BANCO.md`
 - [x] `BACKLOG.md`
-- [ ] Corrigir "12 tabelas" → **13** em `ANALISE_PROJETO_REFERENCIA.md:190`, `:211` e `ARQUITETURA.md:454`
-- [ ] Preencher `PADROES.md` e `DECISOES.md` (hoje vazios)
+- [x] Corrigir "12 tabelas" → **13** em `ANALISE_PROJETO_REFERENCIA.md` e `ARQUITETURA.md`
+- [x] Preencher `PADROES.md` e `DECISOES.md`
+
+---
+
+## Sprint 1.5 — Telas visuais ✅
+
+**Objetivo:** as 10 telas com layout final sobre dados mockados.
+**Concluída na auditoria visual de 16/07/2026.**
+
+> Executada antes da Sprint 1 (decisões de produto e correções de banco), que
+> segue pendente. As telas foram construídas sobre mocks, então a inversão não
+> gerou retrabalho — mas as três correções de modelo continuam bloqueando a
+> Sprint 6.
+
+### Fundação visual
+
+- [x] Tema escuro real (ciano sobre marinho), tokens por papel
+- [x] `Tela`, `Cabecalho` (ADR-0008), `Cartao`, `Botao*`, `CampoTexto`, `TituloSecao`
+- [x] `EstadoVazio`, `EstadoErro`, `Carregamento` (os dois últimos entram na Sprint 6)
+- [x] Migração para `src/` (rotas em `src/app`)
+
+### Telas
+
+- [x] Início — hero, grade de 8 seções, selo oficial
+- [x] Login — visual, sem autenticação
+- [x] Academy — grade 2 colunas, cursos mockados
+- [x] Clube de Benefícios — lista, selos de categoria e desconto
+- [x] Eventos e Parceiros — bloco de data sem `Date` (bug de fuso evitado)
+- [x] Documentos — tamanho formatado a partir de bytes
+- [x] Galeria — grade 4:3 com `expo-image`
+- [x] Patrocinadores — nome no lugar do logo ausente
+- [x] Transmissão — área 16:9, status textual
+- [x] Fale Conosco — formulário validado, envio desabilitado
+
+### Auditoria (16/07/2026)
+
+- [x] `Linking` padronizado: `canOpenURL` + tratamento nas 3 telas
+- [x] `constants/links.ts` — fim da duplicação de `CANAL_YOUTUBE`
+- [x] Rótulo do menu alinhado: "Contato" → "Fale Conosco"
+- [x] `expo-haptics` e `expo-symbols` removidas
+- [ ] Reavaliar props sem uso: `Cartao.imagem`, `Cartao.fim`, `Tela.semPadding`,
+      `Tela.semCabecalho`, `Tela.acaoDireita`, `Cabecalho.logo`, `Sombras.elevada`
 
 ---
 
