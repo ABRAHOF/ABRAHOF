@@ -79,7 +79,8 @@ export function CampoTexto({
             accessibilityRole="button"
             accessibilityLabel={oculto ? 'Mostrar senha' : 'Ocultar senha'}
             onPress={() => setOculto((atual) => !atual)}
-            hitSlop={Espacamentos.sm}
+            // O ícone tem 20pt; o hitSlop completa os 44pt de alvo mínimo.
+            hitSlop={Espacamentos.md}
             style={estilos.acao}>
             <Ionicons
               name={oculto ? 'eye-outline' : 'eye-off-outline'}
