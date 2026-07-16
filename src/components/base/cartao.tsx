@@ -11,15 +11,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import {
-  Cores,
-  Espacamentos,
-  OPACIDADE_DESABILITADO,
-  OPACIDADE_PRESSIONADO,
-  Raios,
-  Sombras,
-  Tipografia,
-} from '@/theme';
+import { Cores, Espacamentos, OPACIDADE_DESABILITADO, Raios, Sombras, Tipografia } from '@/theme';
 
 type CartaoProps = {
   titulo: string;
@@ -130,7 +122,10 @@ const estilos = StyleSheet.create({
     ...Sombras.cartao,
   },
   pressionado: {
-    opacity: OPACIDADE_PRESSIONADO,
+    // Fundo azul claro em vez de opacidade: sobre um tema claro, esmaecer um
+    // cartão quase branco não produz retorno visível ao toque.
+    backgroundColor: Cores.pressionado,
+    borderColor: Cores.primaria,
   },
   desabilitado: {
     opacity: OPACIDADE_DESABILITADO,

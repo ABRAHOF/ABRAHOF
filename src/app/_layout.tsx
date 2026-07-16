@@ -28,7 +28,8 @@ export default function LayoutRaiz() {
           contentStyle: { backgroundColor: Cores.fundo },
         }}
       />
-      <StatusBar style="light" />
+      {/* Conteúdo escuro na barra: o fundo do aplicativo agora é claro. */}
+      <StatusBar style="dark" />
     </SafeAreaProvider>
   );
 }

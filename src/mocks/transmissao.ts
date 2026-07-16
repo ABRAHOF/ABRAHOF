@@ -70,12 +70,3 @@ export const TRANSMISSOES: Transmissao[] = [
     horario: '11:00',
   },
 ];
-
-/**
- * Canal público da associação.
- *
- * Duplicado de `mocks/academy.ts` de propósito: importar o mock de outra
- * funcionalidade acoplaria as duas. Quando os links externos forem
- * centralizados, as duas cópias somem (docs/BACKLOG.md, Sprint 3).
- */
-export const CANAL_YOUTUBE = 'https://www.youtube.com/@abrahof_oficial';

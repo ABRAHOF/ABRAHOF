@@ -7,7 +7,7 @@ import { BotaoSecundario } from '@/components/base/botao-secundario';
 import { TituloSecao } from '@/components/base/titulo-secao';
 import { EstadoVazio } from '@/components/feedback/estado-vazio';
 import { Tela } from '@/components/layout/tela';
-import { CANAL_YOUTUBE } from '@/mocks/transmissao';
+import { CANAL_YOUTUBE } from '@/constants/links';
 import { Espacamentos } from '@/theme';
 
 /**

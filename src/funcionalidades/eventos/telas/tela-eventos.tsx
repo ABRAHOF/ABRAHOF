@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { CartaoEvento } from '../componentes/cartao-evento';
 import { useEventos } from '../hooks/use-eventos';
@@ -20,8 +20,8 @@ import { Espacamentos } from '@/theme';
  * com `rolavel={false}`: aninhar a lista no `ScrollView` dela quebraria a
  * virtualização.
  *
- * Três elementos do projeto de referência ficaram de fora, todos sem
- * comportamento por lá:
+ * Elementos do projeto de referência que ficaram de fora — os três primeiros
+ * por não terem comportamento por lá:
  *
  * - **Pílulas de filtro** (Todos, Congresso, Simpósio…): decorativas — não
  *   existe coluna `tipo` no banco por onde filtrar (docs/BANCO.md §4).
@@ -29,6 +29,8 @@ import { Espacamentos } from '@/theme';
  *   fixo. "27 estados" sequer é calculável, com `local` em texto livre.
  * - **"Ver calendário" e "Solicitar Chancela"**: botões sem ação, e sem destino
  *   para onde apontar.
+ * - **Selo de chancela** no topo da lista: removido **temporariamente**, como
+ *   na tela inicial. O arquivo continua em `assets/images/selo-chancela.png`.
  */
 export function TelaEventos() {
   const { eventos } = useEventos();
@@ -48,17 +50,7 @@ export function TelaEventos() {
         renderItem={renderizarItem}
         contentContainerStyle={estilos.lista}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <View style={estilos.cabecalho}>
-            <Image
-              source={require('../../../../assets/images/selo-chancela.png')}
-              style={estilos.selo}
-              resizeMode="contain"
-              accessibilityLabel="Selo de chancela ABRAHOF 2026"
-            />
-            <TituloSecao titulo="Próximos Eventos" />
-          </View>
-        }
+        ListHeaderComponent={<TituloSecao titulo="Próximos Eventos" />}
         ListEmptyComponent={
           <EstadoVazio
             icone="calendar-outline"
@@ -75,18 +67,5 @@ const estilos = StyleSheet.create({
   lista: {
     gap: Espacamentos.md,
     paddingBottom: Espacamentos.md,
-  },
-  cabecalho: {
-    gap: Espacamentos.md,
-  },
-  selo: {
-    alignSelf: 'center',
-    // Menor que na tela inicial, como no projeto de referência (80 contra 128).
-    // Responsivo com teto: medida fixa incha em aparelhos estreitos.
-    width: '20%',
-    maxWidth: 72,
-    // O arquivo é quadrado (1500×1500).
-    aspectRatio: 1,
-    marginBottom: Espacamentos.xs,
   },
 });

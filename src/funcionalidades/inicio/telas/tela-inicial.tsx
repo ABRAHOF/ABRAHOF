@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { CartaoMenu } from '../componentes/cartao-menu';
 import { SeloOficial } from '../componentes/selo-oficial';
@@ -20,10 +20,14 @@ const LARGURA_TRES_COLUNAS = 600;
 /**
  * Tela inicial: hub de navegação do aplicativo.
  *
- * Reproduz a estrutura da referência — selo, chamada do evento, destaque da
+ * Reproduz a estrutura da referência — chamada do evento, destaque da
  * transmissão, grade de seções e selo oficial — com as diferenças registradas
  * no relatório: sem degradês, sem animação de entrada e sem os botões de menu e
  * sino, que na web não executam nada.
+ *
+ * O selo de chancela do topo foi removido **temporariamente**, aqui e na tela
+ * de Eventos. O arquivo continua em `assets/images/selo-chancela.png`, hoje sem
+ * uso no código.
  */
 export function TelaInicial() {
   const router = useRouter();
@@ -34,14 +38,8 @@ export function TelaInicial() {
   const larguraCartao = Math.floor(larguraDisponivel / colunas);
 
   return (
-    <Tela marca={EVENTO_DESTAQUE.nome} voltar={false} estiloConteudo={estilos.conteudo}>
+    <Tela marca={EVENTO_DESTAQUE.nome} voltar={false}>
       <View style={estilos.hero}>
-        <Image
-          source={require('../../../../assets/images/selo-chancela.png')}
-          style={estilos.selo}
-          resizeMode="contain"
-          accessibilityLabel="Selo de chancela ABRAHOF 2026"
-        />
         <Text style={estilos.periodo}>{EVENTO_DESTAQUE.periodo}</Text>
         <Text style={estilos.chamada}>{EVENTO_DESTAQUE.chamada}</Text>
       </View>
@@ -78,29 +76,9 @@ export function TelaInicial() {
 }
 
 const estilos = StyleSheet.create({
-  /**
-   * O padding padrão da `Tela` (24) somava 36pt com o rodapé do cabeçalho e
-   * afastava demais o selo do topo. Reduzido só aqui: as demais telas abrem com
-   * título, que precisa desse respiro.
-   */
-  conteudo: {
-    paddingTop: Espacamentos.md,
-  },
   hero: {
     alignItems: 'center',
     gap: Espacamentos.sm,
-  },
-  selo: {
-    // Largura responsiva com teto: em medida fixa o selo ocupa quase metade da
-    // largura útil num iPhone SE e um terço num Pro Max — quanto menor a tela,
-    // maior ele parece.
-    width: '28%',
-    maxWidth: 104,
-    // O arquivo é quadrado (1500×1500). Definir só a largura e deixar a altura
-    // sair daqui preserva a proporção sem esticar nem cortar.
-    aspectRatio: 1,
-    // Sem margem: o `gap` do hero já separa o selo do texto. Somar os dois é o
-    // que criava espaço extra logo abaixo da imagem.
   },
   periodo: {
     ...Tipografia.corpoForte,

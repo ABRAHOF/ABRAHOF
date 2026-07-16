@@ -35,9 +35,11 @@ substitui a anterior — o histórico é o valor do registro.
 | [0002](#adr-0002--expo-como-plataforma) | Expo como plataforma | Aceita | Definida no `CLAUDE.md` |
 | [0003](#adr-0003--expo-router-para-navegação) | Expo Router para navegação | Aceita | Definida no `CLAUDE.md` |
 | [0004](#adr-0004--organização-das-pastas) | Organização das pastas | Aceita | Proposta em `ARQUITETURA.md` §4 |
-| [0005](#adr-0005--tema-escuro-único) | Tema escuro único | Aceita | **Decidida hoje** |
+| [0005](#adr-0005--tema-escuro-único) | Tema escuro único | **Substituída** pela [0009](#adr-0009--identidade-clara) | Decidida em 16/07/2026 |
 | [0006](#adr-0006--rotas-curtas) | Rotas curtas | Aceita | **Decidida hoje** |
 | [0007](#adr-0007--estratégia-para-supabase) | Estratégia para Supabase | Aceita | Proposta em `ARQUITETURA.md` §11 |
+| [0008](#adr-0008--cabeçalho-próprio-no-lugar-do-header-nativo) | Cabeçalho próprio no lugar do header nativo | Aceita | **Decidida na fundação visual** |
+| [0009](#adr-0009--identidade-clara) | Identidade clara (branco + azul) | Aceita | **Decidida hoje** — substitui a 0005 |
 
 **Nota sobre as três primeiras:** ADR-0001 a 0003 são **registros retroativos**.
 Chegaram prontas no `CLAUDE.md`, antes deste histórico existir. Estão aqui porque
@@ -275,7 +277,11 @@ Com quatro regras:
 
 ## ADR-0005 — Tema escuro único
 
-**Data:** 16/07/2026 · **Status:** Aceita
+**Data:** 16/07/2026 · **Status:** ~~Aceita~~ **Substituída pela ADR-0009**
+
+> Vigorou durante a fundação visual e a construção das 10 telas. A identidade
+> escura foi trocada por uma clara em 16/07/2026 — o registro permanece porque
+> o histórico é o valor deste documento.
 
 ### Contexto
 
@@ -525,6 +531,145 @@ Registrados para que ninguém os considere resolvidos:
 | **Trocar de backend** | O banco é o melhor ativo herdado. Descartá-lo seria jogar fora o modelo de 10 telas |
 | **SecureStore para a sessão** | Limite de ~2 KB no iOS; ver acima |
 | **Migrar tudo e corrigir depois** | Retrabalho em serviço, tela e dados |
+
+---
+
+## ADR-0008 — Cabeçalho próprio no lugar do header nativo
+
+**Data:** 16/07/2026 (registro retroativo, na auditoria) · **Status:** Aceita
+
+> Substitui parcialmente a **ADR-0003**, que listava como vantagem o header
+> nativo da Stack cuidar de título e Safe Area.
+
+### Contexto
+
+A ADR-0003 escolheu o Expo Router e contou entre suas vantagens que "o header
+nativo cuida de título e botão voltar, o que resolve de graça a Safe Area
+superior".
+
+Na fundação visual, a exigência mudou: o cabeçalho precisava acomodar **logo,
+subtítulo e ação à direita** — o header nativo não faz isso bem. Manter os dois
+duplicaria o topo da tela.
+
+**Esta decisão foi tomada e implementada, mas nunca registrada.** A auditoria
+encontrou a lacuna: o código diz uma coisa, a `ARQUITETURA.md` §10 ainda dizia
+outra.
+
+### Decisão
+
+`headerShown: false` no Stack raiz. As telas usam o `Cabecalho` de
+`components/layout/`, que trata título, subtítulo, marca, voltar e ação.
+
+### Consequências
+
+**Positivas**
+
+- Logo e subtítulo cabem — impossível com o nativo.
+- Um só cabeçalho para manter, com aparência idêntica nas duas plataformas.
+- Título deixa de ser declarado no `_layout` e passa a ser responsabilidade da
+  tela, ao lado do conteúdo que ele descreve.
+
+**Negativas**
+
+- **A Safe Area superior passa a ser nossa responsabilidade** — o `Cabecalho`
+  usa `useSafeAreaInsets`; a `Tela` cuida da inferior. Divisão que precisa ser
+  respeitada por quem criar tela nova.
+- Perde-se a animação de título e a transição nativa do header no iOS.
+- O botão voltar é desenhado à mão. O **gesto** de voltar continua nativo: é da
+  Stack, não do header.
+
+### Alternativas descartadas
+
+| Alternativa | Por que não |
+| --- | --- |
+| **Manter o header nativo** | Não acomoda logo nem subtítulo |
+| **Nativo nas seções, próprio na home** | Duas convenções de cabeçalho no mesmo app |
+
+---
+
+## ADR-0009 — Identidade clara
+
+**Data:** 16/07/2026 · **Status:** Aceita
+
+> **Substitui a ADR-0005** (tema escuro único).
+
+### Contexto
+
+A ADR-0005 adotou o tema escuro por fidelidade: o projeto de referência é ciano
+sobre azul-marinho, e não tem modo claro real.
+
+A direção de identidade mudou — o aplicativo deve ser claro, limpo e
+institucional: branco de fundo, azul de destaque, cinza claro nas bordas,
+azul-escuro nos textos. É decisão de marca, não técnica.
+
+O pedido inicial era aplicar a mudança **apenas na tela inicial**. A análise
+mostrou que isso seria o pior dos caminhos:
+
+- **App todo:** 4 arquivos, porque os tokens são nomeados por papel e não há
+  nenhuma cor literal fora de `theme/` — verificado na auditoria, em 78
+  arquivos.
+- **Só a home:** ~8 arquivos, com variante de cor em seis componentes
+  **compartilhados** (quatro deles usados pelas outras nove telas), resultando
+  num aplicativo de duas identidades — branco na home, marinho ao tocar qualquer
+  cartão.
+
+A disciplina de tokens inverteu a intuição: mudar tudo saiu mais barato e mais
+seguro que mudar uma tela.
+
+### Decisão
+
+Identidade clara em todo o aplicativo, aplicada em `theme/colors.ts`.
+
+| Papel | Valor | Contraste medido |
+| --- | --- | --- |
+| Fundo | `#FFFFFF` | — |
+| Superfície (cartões) | `#F8FAFC` | — |
+| Superfície de apoio | `#E8EDF1` | — |
+| Primária | `#147DB3` | 4,55:1 sobre branco |
+| Sobre primária | `#FFFFFF` | 4,55:1 sobre a primária |
+| Texto | `#123247` | 13,3:1 sobre branco |
+| Texto suave | `#667580` | 4,75:1 sobre branco |
+| Borda | `#DCE3E8` | 1,3:1 — decorativa |
+| Pressionado | `#E8F5FB` | — |
+| Erro | `#C62828` | 5,6:1 sobre branco |
+
+**Sem modo escuro.** Um tema para manter, como na ADR-0005 — o que mudou foi
+qual.
+
+### Consequências
+
+**Positivas**
+
+- **O contraste do texto de apoio deixou de ser um risco.** No tema escuro ele
+  ficava no limite do WCAG AA e vinha sendo arrastado como pendência desde a
+  fundação; agora rende 4,75:1, medido.
+- Sombra preta discreta funciona igual nas duas plataformas. A sombra ciano
+  anterior saía acinzentada no Android, que não aceita cor em `elevation`.
+- Legibilidade sob sol forte melhora — e o aplicativo será usado em congresso,
+  inclusive em área externa. Era uma desvantagem registrada na ADR-0005.
+- Nenhum componente precisou de variante de cor.
+
+**Negativas**
+
+- **Diverge do projeto de referência**, que é escuro. A reconstrução deixa de
+  ser fiel na cor — decisão consciente, de marca.
+- **`#18AEE5` não pode ser usado como conteúdo:** rende 2,55:1 sobre branco,
+  abaixo do mínimo de 3:1. Serve como acento e fundo; ícones usam `#147DB3`.
+- **O feedback de toque precisou mudar de mecanismo.** Reduzir a opacidade de um
+  cartão quase branco sobre fundo branco não produz retorno visível: `Cartao` e
+  `CartaoMenu` passaram a trocar o fundo para `Cores.pressionado`. Botões, que
+  têm cor sólida, seguem com opacidade.
+- `app.json` (`userInterfaceStyle`) e `StatusBar` invertidos para `light` e
+  `dark`.
+- Ícone, splash e capturas das lojas precisarão nascer claros.
+
+### Alternativas descartadas
+
+| Alternativa | Por que não |
+| --- | --- |
+| **Só a tela inicial clara** | Duas identidades no mesmo app, e o dobro de arquivos |
+| **Claro + escuro com alternância** | Dobra a manutenção; a ADR-0005 já havia recusado, e a razão continua válida |
+| **Manter o escuro** | A identidade é decisão do cliente |
 
 ---
 

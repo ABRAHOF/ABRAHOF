@@ -100,6 +100,3 @@ export const BENEFICIOS: Beneficio[] = [
     icone: 'pricetag-outline',
   },
 ];
-
-/** Página pública de adesão da associação. Sem parâmetros nem credenciais. */
-export const LINK_ADESAO = 'https://abrahof.org.br/adesao/';

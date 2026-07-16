@@ -53,7 +53,10 @@ export const SECOES: Secao[] = [
     rota: '/galeria',
   },
   {
-    titulo: 'Contato',
+    // "Fale Conosco", e não "Contato": é o rótulo do projeto de referência e o
+    // título da própria tela. Com dois nomes, o usuário toca em um e chega em
+    // outro.
+    titulo: 'Fale Conosco',
     icone: 'mail-outline',
     rota: '/contato',
   },

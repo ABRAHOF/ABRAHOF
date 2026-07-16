@@ -7,7 +7,7 @@ import { BotaoPrimario } from '@/components/base/botao-primario';
 import { TituloSecao } from '@/components/base/titulo-secao';
 import { EstadoVazio } from '@/components/feedback/estado-vazio';
 import { Tela } from '@/components/layout/tela';
-import { LINK_ADESAO } from '@/mocks/beneficios';
+import { LINK_ADESAO } from '@/constants/links';
 import { Espacamentos } from '@/theme';
 
 /**

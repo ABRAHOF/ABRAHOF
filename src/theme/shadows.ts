@@ -1,58 +1,55 @@
 import { Platform, type ViewStyle } from 'react-native';
 
-import { Cores } from './colors';
-
 /**
  * Sombras.
  *
- * O projeto de referência define as sombras em CSS (`box-shadow`). A tradução
- * para React Native não é direta:
+ * Discretas, como pede um tema claro: sobre fundo branco, sombra pesada suja a
+ * tela em vez de dar profundidade. Todas usam preto com opacidade baixa — a
+ * sombra colorida da paleta anterior (ciano a 40%) não faz sentido aqui.
  *
- * - iOS usa `shadowColor`/`shadowOffset`/`shadowOpacity`/`shadowRadius`. O raio
- *   do iOS equivale a cerca de metade do blur do CSS, então `blur: 20` vira
- *   `shadowRadius: 10`.
- * - Android usa `elevation`, que **não aceita cor** nas versões que o
- *   aplicativo suporta. A sombra ciano do destaque aparece acinzentada no
- *   Android — diferença aceita e registrada, não um defeito.
+ * A tradução de CSS para React Native não é direta:
  *
- * O CSS ainda aplica spread negativo (`-4px`), que não existe em nenhuma das
- * duas plataformas; o efeito é aproximado reduzindo a opacidade.
+ * - iOS usa `shadowColor`/`shadowOffset`/`shadowOpacity`/`shadowRadius`.
+ * - Android usa `elevation`, que **não aceita cor** nas versões suportadas.
+ *   Como agora todas as sombras são pretas, a diferença entre plataformas
+ *   praticamente desaparece — no tema escuro, a sombra ciano do destaque saía
+ *   acinzentada no Android.
  */
 
 export const Sombras = {
-  /** Destaque: botões e ícones primários. CSS: 0 4px 20px -4px ciano/40%. */
+  /** Destaque: botões e ícones primários. */
   destaque: Platform.select<ViewStyle>({
     ios: {
-      shadowColor: Cores.primaria,
+      shadowColor: '#000',
       shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.4,
-      shadowRadius: 10,
+      shadowOpacity: 0.14,
+      shadowRadius: 8,
     },
-    android: { elevation: 6 },
+    android: { elevation: 3 },
     default: {},
   }),
 
-  /** Cartões. CSS: 0 8px 32px -8px preto/40%. */
+  /** Cartões. Sutil: a borda e a superfície já os separam do fundo. */
   cartao: Platform.select<ViewStyle>({
     ios: {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.4,
-      shadowRadius: 16,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 8,
     },
-    android: { elevation: 4 },
+    android: { elevation: 2 },
     default: {},
   }),
 
-  /** Elementos flutuantes sobre o conteúdo. CSS: 0 20px 40px -12px preto/50%. */
+  /** Elementos flutuantes sobre o conteúdo. */
   elevada: Platform.select<ViewStyle>({
     ios: {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 20 },
-      shadowOpacity: 0.5,
-      shadowRadius: 20,
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.16,
+      shadowRadius: 16,
     },
-    android: { elevation: 12 },
+    android: { elevation: 8 },
     default: {},
   }),
 } as const;

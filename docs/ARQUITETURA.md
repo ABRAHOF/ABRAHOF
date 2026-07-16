@@ -398,8 +398,11 @@ Stack única com `app/index.tsx` como hub — a mesma ideia da referência (grad
 atalhos), que é adequada ao formato: **15 destinos não cabem numa tab bar**
 (o confortável são 5).
 
-O header nativo da Stack cuida de título e botão voltar, o que resolve de graça a
-Safe Area superior e o gesto de voltar do iOS.
+O header nativo da Stack está **desligado** (`headerShown: false`): as telas usam
+o `Cabecalho` próprio, que acomoda logo, subtítulo e ação — o nativo não. Como
+consequência, a Safe Area superior é tratada pelo `Cabecalho` e a inferior pela
+`Tela`. O gesto de voltar do iOS continua nativo: é da Stack, não do header.
+Ver `DECISOES.md` (ADR-0008).
 
 ### Divergência a resolver
 
@@ -451,7 +454,7 @@ motivo para fixar os nomes de rota agora.
 
 ### Situação
 
-O banco tem **12 tabelas com RLS**, das quais o app web consome **3**. As tabelas
+O banco tem **13 tabelas com RLS**, das quais o app web consome **3**. As tabelas
 não usadas (`documentos`, `galeria`, `clube_beneficios`, `patrocinadores`,
 `transmissoes`, `contatos`, `revista_aos`, `telemedicina`, `teleodontologia`,
 `advogados_parceiros`) já definem o formato final das telas — é um ativo, não
@@ -776,18 +779,20 @@ Ordem sugerida. Nenhuma fase começa antes da anterior estar verificada.
 | Fase | Entrega | Depende de |
 | --- | --- | --- |
 | **0 — Fundação** ✅ | Navegação, telas vazias, Safe Area | — |
-| **1 — Identidade visual** | Tema real (ciano/marinho, escuro), Poppins, componentes base | — |
-| **2 — Conteúdo mockado** | 10 telas com layout final sobre `mocks/` | Fase 1 |
+| **1 — Identidade visual** ✅ | Tema, componentes base (Poppins pendente) | — |
+| **2 — Conteúdo mockado** ✅ | 10 telas com layout final sobre `mocks/` | Fase 1 |
 | **3 — Telas ausentes** | Telemedicina, Teleodontologia, Advogados | Fase 2 |
 | **4 — Dados reais** | Serviços apontam para o Supabase | Fase 3 |
 | **5 — Autenticação** | Login, cadastro, guarda de rota | Decisão 1 |
 | **6 — Notificações** | Push + development build | Fase 5, contas de loja |
 | **7 — Publicação** | EAS Build/Submit | Fase 6 |
 
-A **Fase 1 corrige um erro conhecido**: o tema provisório atual é claro com azul
-escuro, e o app real é **escuro, ciano sobre azul-marinho**. Os tokens estão no
-apêndice da análise — com o alerta de que as classes da web se chamam
-`gradient-gold` e `gradient-forest` mas não produzem nem dourado nem verde.
+A identidade visual passou por duas mudanças. Primeiro adotou a paleta do
+projeto de referência — ciano sobre azul-marinho, escura, cujos tokens estão no
+apêndice da análise. Depois foi substituída por uma **identidade clara**
+(branco + azul), por decisão de marca: ver `DECISOES.md` (ADR-0009, que
+substitui a ADR-0005). A Poppins segue pendente — o aplicativo usa a fonte do
+sistema.
 
 ---
 
