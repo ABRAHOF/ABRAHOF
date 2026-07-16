@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaGaleria } from '@/funcionalidades/galeria/telas/tela-galeria';
 
-export default function TelaGaleria() {
-  return <Tela titulo="Galeria" subtitulo="Conteúdo em construção." />;
-}
+export default TelaGaleria;
