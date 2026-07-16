@@ -1,5 +1,3 @@
-import { Tela } from '@/components/layout/tela';
+import { TelaEventos } from '@/funcionalidades/eventos/telas/tela-eventos';
 
-export default function TelaEventos() {
-  return <Tela titulo="Eventos" subtitulo="Conteúdo em construção." />;
-}
+export default TelaEventos;
